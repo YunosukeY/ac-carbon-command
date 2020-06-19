@@ -27,6 +27,10 @@ def get_submission_code(soup, submission_url):
   submission_code = soup.find(id='submission-code').get_text()
   return submission_code
 
+def get_language(soup, submission_url):
+  lang = soup.find_all(class_='text-center')[3].get_text()
+  return lang
+
 def get_carbon_image(code):
   headers = {'Content-Type' : 'application/json'}
   obj = {'code' : code, 'language': 'text/x-c++src'} 
