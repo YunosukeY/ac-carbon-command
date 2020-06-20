@@ -11,6 +11,13 @@ from bs4 import BeautifulSoup
 from requests_oauthlib import OAuth1Session
 from dotenv import load_dotenv
 
+def url_validation(url):
+  m = re.fullmatch(r'https://atcoder.jp/contests/\w+/submissions/\d+(\?lang=(ja|en))?', url)
+  if m == None:
+    return False
+  else:
+    return True
+
 def get_submission_id(url):
   tmp = re.split('[/?]', url)
   if tmp[-1][0:4] == 'lang':
@@ -107,7 +114,13 @@ def get_twitter():
 
 if __name__ == '__main__':
   args = sys.argv
+  if len(args) < 2:
+    exit()
   submission_url = args[1]
+  if url_validation(submission_url) == False:
+    print('Invalid URL')
+    exit()
+
   soup = get_soup(submission_url)
   submission_code = get_submission_code(soup, submission_url)
   language = get_language(soup, submission_url)
@@ -121,6 +134,3 @@ if __name__ == '__main__':
   
   tweet_title = get_tweet_title(soup, submission_url)
   tweet(tweet_title, display_url)
- 
-# https://deepblue-ts.co.jp/python/pypi-oss-package/
-# https://parco1021.hatenablog.com/entry/2019/11/23/200930

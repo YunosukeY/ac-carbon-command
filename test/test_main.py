@@ -5,9 +5,22 @@ from pathlib import Path
 import sys
 sys.path.append(str(Path(__file__).parent.parent))
 sys.path.append(str(Path(__file__).parent.parent / "src"))
-from src.main import get_submission_id, get_soup, get_submission_code, get_language, get_lang_para, get_carbon_image, get_tweet_title
+from src.main import url_validation, get_submission_id, get_soup, get_submission_code, get_language, get_lang_para, get_carbon_image, get_tweet_title
 
 class TestFoo(TestCase):
+  def test_url_validation(self):
+    test_patterns = [
+      ('https://atcoder.jp/contests/abc170/submissions/14465204', True),
+      ('https://atcoder.jp/contests/abc170/submissions/14465204?lang=ja', True),
+      ('https://atcoder.jp/contests/abc170/submissions/14465204?lang=en', True),
+      ('https://atcoder.jp/contests/abc170/submissions/14465204?lang=ko', False),
+      ('http://atcoder.jp/contests/abc170/submissions/14465204', False),
+      ('https://atcoder.jp/contests/abc170/submissions/xxxxxxxx', False),
+    ]
+    for url, ans in test_patterns:
+      with self.subTest(url=url, ans=ans):
+        self.assertEqual(url_validation(url), ans)
+
   def test_get_submission_id(self):
     test_patterns = [
       ('https://atcoder.jp/contests/abc170/submissions/14465204', '14465204'),
@@ -32,7 +45,7 @@ int main() {\r
     if (a == 0)\r
       cout << i + 1 << endl;\r
   }\r
-}''')
+}'''),
     ]
     for url, ans in test_patterns:
       with self.subTest(url=url, ans=ans):
@@ -50,7 +63,7 @@ int main() {\r
       ('https://atcoder.jp/contests/abc170/submissions/14435215', 'C# (.NET Core 3.1.201)'),
       ('https://atcoder.jp/contests/abc170/submissions/14368206', 'PyPy3 (7.3.0)'),
       ('https://atcoder.jp/contests/abc170/submissions/14381674', 'Haskell (GHC 8.8.3)'),
-      ('https://atcoder.jp/contests/abc170/submissions/14435774', 'Rust (1.42.0)')
+      ('https://atcoder.jp/contests/abc170/submissions/14435774', 'Rust (1.42.0)'),
     ]
     for url, ans in test_patterns:
       with self.subTest(url=url, ans=ans):
@@ -68,7 +81,7 @@ int main() {\r
       ('C# (.NET Core 3.1.201)', 'text/x-csharp'),
       ('PyPy3 (7.3.0)', 'python'),
       ('Haskell (GHC 8.8.3)', 'haskell'),
-      ('Rust (1.42.0)', 'rust')
+      ('Rust (1.42.0)', 'rust'),
     ]
     for lang, ans in test_patterns:
       with self.subTest(lang=lang, ans=ans):
@@ -81,7 +94,7 @@ int main() {\r
       ('https://atcoder.jp/contests/abc170/submissions/14465204?lang=ja'
       ,'提出 #14465204 - AtCoder Beginner Contest 170 https://atcoder.jp/contests/abc170/submissions/14465204?lang=ja'),
       ('https://atcoder.jp/contests/abc170/submissions/14465204?lang=en'
-      ,'Submission #14465204 - AtCoder Beginner Contest 170 https://atcoder.jp/contests/abc170/submissions/14465204?lang=en')
+      ,'Submission #14465204 - AtCoder Beginner Contest 170 https://atcoder.jp/contests/abc170/submissions/14465204?lang=en'),
     ]
     for url, ans in test_patterns:
       with self.subTest(url=url, ans=ans):
