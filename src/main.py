@@ -34,24 +34,36 @@ def get_submission_code(soup, submission_url):
   submission_code = soup.find(id='submission-code').get_text()
   return submission_code
 
-def get_language(soup, submission_url):
-  lang = soup.find_all(class_='text-center')[3].get_text()
-  return lang
+def get_submission_info(soup, submission_url):
+  tc = soup.find_all(class_='text-center')
+  info = {
+    'problem': tc[1].get_text(),
+    'user': tc[2].get_text(),
+    'lang': tc[3].get_text(),
+    'length': tc[5].get_text(),
+    'result': tc[6].get_text(),
+    'time': tc[7].get_text(),
+  }
+  return info
+
+def get_contest_title(soup, submission_url):
+  title = soup.find(class_='contest-title').get_text()
+  return title
 
 def get_lang_para(lang):
-  d = {'C (GCC 9.2.1)': 'text/x-csrc',
-      'C (Clang 10.0.0)': 'text/x-csrc',
-      'C++ (GCC 9.2.1)': 'text/x-c++src',
-      'C++ (Clang 10.0.0)': 'text/x-c++src',
-      'Java (OpenJDK 11.0.6)': 'text/x-java',
-      'Python (3.8.2)': 'python',
-      'Ruby (2.7.1)': 'ruby',
-      'C# (.NET Core 3.1.201)': 'text/x-csharp',
-      'PyPy3 (7.3.0)': 'python',
-      'Haskell (GHC 8.8.3)': 'haskell',
-      'Rust (1.42.0)': 'rust',
-      'Brainfuck (bf 20041219)': 'auto'
-      }
+  d = {
+    'C (GCC 9.2.1)': 'text/x-csrc',
+    'C (Clang 10.0.0)': 'text/x-csrc',
+    'C++ (GCC 9.2.1)': 'text/x-c++src',
+    'C++ (Clang 10.0.0)': 'text/x-c++src',
+    'Java (OpenJDK 11.0.6)': 'text/x-java',
+    'Python (3.8.2)': 'python',
+    'Ruby (2.7.1)': 'ruby',
+    'C# (.NET Core 3.1.201)': 'text/x-csharp',
+    'PyPy3 (7.3.0)': 'python',
+    'Haskell (GHC 8.8.3)': 'haskell',
+    'Rust (1.42.0)': 'rust',
+  }
   if lang in d:
     return d[lang]
   else:
@@ -123,8 +135,8 @@ if __name__ == '__main__':
 
   soup = get_soup(submission_url)
   submission_code = get_submission_code(soup, submission_url)
-  language = get_language(soup, submission_url)
-  lang_para = get_lang_para(language)
+  info = get_submission_info(soup, submission_url)
+  lang_para = get_lang_para(info['lang'])
   
   image = get_carbon_image(submission_code, lang_para)
 
