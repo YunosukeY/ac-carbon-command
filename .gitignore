@@ -1,3 +1,7 @@
-.env
+env.py
 *.pyc
 accarbon.egg-info
+dist
+build
+README.rst
+.DS_Store

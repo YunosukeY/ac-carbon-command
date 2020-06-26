@@ -2,9 +2,9 @@ import sys
 from urllib import request
 from bs4 import BeautifulSoup
 
-from atcoder import url_validation, get_submission_id, get_submission_code, get_submission_info, get_tweet_title
-from carbon import get_lang_para, get_carbon_image
-from twitter import get_twitter, get_media_id, get_display_url, tweet
+from .atcoder import url_validation, get_submission_id, get_submission_code, get_submission_info, get_tweet_title
+from .carbon import get_lang_para, get_carbon_image
+from .twitter import get_twitter, get_media_id, get_display_url, tweet
 
 
 def get_soup(submission_url):
@@ -17,6 +17,7 @@ def accarbon():
     # urlを入力として受け取る
     args = sys.argv
     if len(args) < 2:
+        print('URL is needed')
         exit()
     submission_url = args[1]
     if url_validation(submission_url) is False:

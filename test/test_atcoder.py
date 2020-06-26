@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from unittest import TestCase
-from src.accarbon import get_soup
-from src.atcoder import url_validation, get_submission_id, get_submission_code, get_submission_info, get_contest_title, get_tweet_title
+from accarbon_command.accarbon import get_soup
+from accarbon_command.atcoder import url_validation, get_submission_id, get_submission_code, get_submission_info, get_contest_title, get_tweet_title
 
 
 class TestAtCoder(TestCase):

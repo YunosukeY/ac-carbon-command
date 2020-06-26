@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from src.carbon import get_lang_para
+from accarbon_command.carbon import get_lang_para
 from unittest import TestCase
 
 

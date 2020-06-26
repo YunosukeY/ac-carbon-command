@@ -1,23 +1,13 @@
-import os
 import json
 import random
 import webbrowser
 from urllib import parse
-from dotenv import load_dotenv
 from requests_oauthlib import OAuth1Session
 
-
-def load_env():
-    load_dotenv()
-    API_KEY = os.getenv('API_KEY')
-    API_KEY_SECRET = os.getenv('API_KEY_SECRET')
-    ACCESS_TOKEN = os.getenv('ACCESS_TOKEN')
-    ACCESS_TOKEN_SECRET = os.getenv('ACCESS_TOKEN_SECRET')
-    return API_KEY, API_KEY_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET
+from .env import API_KEY, API_KEY_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET
 
 
 def get_twitter():
-    API_KEY, API_KEY_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET = load_env()
     twitter = OAuth1Session(API_KEY, API_KEY_SECRET,
                             ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
     return twitter
